@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use AgencyForge in research or a product, please cite it as below."
+title: "AgencyForge"
+type: software
+abstract: "Open-source, event-driven operating system for an autonomous AI agency: visible plan-assign-execute-respond missions, department agents, tiered memory and a live dashboard."
+license: MIT
+repository-code: "https://github.com/Rajeshkadali97/agencyforge"
+version: "0.2.0"
+date-released: "2026-10-13"
+keywords:
+  - ai-agents
+  - multi-agent
+  - orchestration
+  - typescript
+authors:
+  - name: "AgencyForge contributors"

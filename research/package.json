@@ -1,0 +1,21 @@
+{
+  "name": "@agencyforge/research",
+  "version": "1.0.0",
+  "description": "Research Engine for AgencyForge",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "test": "ts-node test_research.ts",
+    "lint": "tsc --noEmit --project tsconfig.json"
+  },
+  "dependencies": {
+    "@agencyforge/kernel": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
+  }
+}

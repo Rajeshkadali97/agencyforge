@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" role="img" aria-label="AgencyForge architecture: dashboard, runtime bridge, four-stage mission pipeline, kernel, agents, public API tools, memory engine and AI gateway">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="780" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF7A18"/>
+      <stop offset="0.5" stop-color="#E5408B"/>
+      <stop offset="1" stop-color="#7C5CFF"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#A99BFF"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="780" fill="#0B0F1A"/>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" fill="#E9E6FF">
+    <text x="60" y="60" font-size="30" font-weight="800">AgencyForge architecture</text>
+    <text x="60" y="90" font-size="16" fill="#9C96C4">A goal enters at the top, flows through four visible stages, and every step is an event on the kernel bus.</text>
+
+    <!-- Dashboard -->
+    <rect x="60" y="120" width="1080" height="84" rx="16" fill="#151230" stroke="#7C5CFF" stroke-width="2"/>
+    <text x="90" y="158" font-size="20" font-weight="700">Dashboard</text>
+    <text x="90" y="184" font-size="15" fill="#B9B3E6">Next.js 15 · React 19 · HQ · Missions · API Explorer · AI Routing · Websites · 3D-style agent avatars</text>
+    <text x="1110" y="158" font-size="14" text-anchor="end" fill="#FFD166">REST + SSE</text>
+
+    <line x1="600" y1="204" x2="600" y2="240" stroke="#A99BFF" stroke-width="2.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+    <!-- Runtime bridge -->
+    <rect x="60" y="240" width="1080" height="72" rx="16" fill="#151230" stroke="#E5408B" stroke-width="2"/>
+    <text x="90" y="276" font-size="20" font-weight="700">Runtime bridge</text>
+    <text x="90" y="300" font-size="15" fill="#B9B3E6">bearer auth · CORS · rate limit · security headers · /health · /api/runtime/missions · /api/runtime/apis</text>
+
+    <line x1="600" y1="312" x2="600" y2="348" stroke="#A99BFF" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+    <!-- Mission pipeline -->
+    <rect x="60" y="348" width="1080" height="132" rx="16" fill="#1B1038" stroke="url(#brand)" stroke-width="3"/>
+    <text x="90" y="384" font-size="22" font-weight="800">Mission pipeline</text>
+    <g font-size="16" font-weight="700">
+      <rect x="90" y="400" width="226" height="60" rx="14" fill="#FFFFFF" fill-opacity="0.07" stroke="#7C5CFF"/>
+      <text x="203" y="425" text-anchor="middle">1 · Plan</text>
+      <text x="203" y="447" text-anchor="middle" font-size="12" font-weight="500" fill="#B9B3E6">goal → task list</text>
+
+      <rect x="346" y="400" width="226" height="60" rx="14" fill="#FFFFFF" fill-opacity="0.07" stroke="#E5408B"/>
+      <text x="459" y="425" text-anchor="middle">2 · Assign</text>
+      <text x="459" y="447" text-anchor="middle" font-size="12" font-weight="500" fill="#B9B3E6">agent + tool per task</text>
+
+      <rect x="602" y="400" width="226" height="60" rx="14" fill="#FFFFFF" fill-opacity="0.07" stroke="#FF7A18"/>
+      <text x="715" y="425" text-anchor="middle">3 · Execute</text>
+      <text x="715" y="447" text-anchor="middle" font-size="12" font-weight="500" fill="#B9B3E6">tools run in parallel</text>
+
+      <rect x="858" y="400" width="252" height="60" rx="14" fill="#FFFFFF" fill-opacity="0.07" stroke="#FFD166"/>
+      <text x="984" y="425" text-anchor="middle">4 · Respond</text>
+      <text x="984" y="447" text-anchor="middle" font-size="12" font-weight="500" fill="#B9B3E6">LLM or template brief</text>
+    </g>
+    <g stroke="#A99BFF" stroke-width="2.5" marker-end="url(#arrow)">
+      <line x1="316" y1="430" x2="344" y2="430"/>
+      <line x1="572" y1="430" x2="600" y2="430"/>
+      <line x1="828" y1="430" x2="856" y2="430"/>
+    </g>
+
+    <g stroke="#A99BFF" stroke-width="2.5" marker-end="url(#arrow)">
+      <line x1="187" y1="480" x2="187" y2="540"/>
+      <line x1="462" y1="480" x2="462" y2="540"/>
+      <line x1="737" y1="480" x2="737" y2="540"/>
+      <line x1="1012" y1="480" x2="1012" y2="540"/>
+    </g>
+
+    <!-- Bottom row -->
+    <g>
+      <rect x="60" y="540" width="255" height="150" rx="16" fill="#151230" stroke="#FF7A18" stroke-width="2"/>
+      <text x="82" y="578" font-size="19" font-weight="700">Agents</text>
+      <text x="82" y="606" font-size="14" fill="#B9B3E6">Research · Analytics</text>
+      <text x="82" y="628" font-size="14" fill="#B9B3E6">Marketing · Content · CEO</text>
+      <text x="82" y="656" font-size="13" fill="#9C96C4">registry + lifecycle (kernel)</text>
+
+      <rect x="335" y="540" width="255" height="150" rx="16" fill="#151230" stroke="#7C5CFF" stroke-width="2"/>
+      <text x="357" y="578" font-size="19" font-weight="700">Memory engine</text>
+      <text x="357" y="606" font-size="14" fill="#B9B3E6">8 tiers L0–L7</text>
+      <text x="357" y="628" font-size="14" fill="#B9B3E6">scoped · summarised · pruned</text>
+      <text x="357" y="656" font-size="13" fill="#9C96C4">SQLite persistence</text>
+
+      <rect x="610" y="540" width="255" height="150" rx="16" fill="#151230" stroke="#E5408B" stroke-width="2"/>
+      <text x="632" y="578" font-size="19" font-weight="700">Public API tools</text>
+      <text x="632" y="606" font-size="14" fill="#B9B3E6">Wikipedia · Open-Meteo</text>
+      <text x="632" y="628" font-size="14" fill="#B9B3E6">World Bank · Hacker News</text>
+      <text x="632" y="656" font-size="13" fill="#9C96C4">+ 1,700-API searchable catalog</text>
+
+      <rect x="885" y="540" width="255" height="150" rx="16" fill="#151230" stroke="#FFD166" stroke-width="2"/>
+      <text x="907" y="578" font-size="19" font-weight="700">AI gateway</text>
+      <text x="907" y="606" font-size="14" fill="#B9B3E6">9Router · Ollama · OpenRouter</text>
+      <text x="907" y="628" font-size="14" fill="#B9B3E6">Gemini · NIM · Anthropic · OpenAI</text>
+      <text x="907" y="656" font-size="13" fill="#9C96C4">optional · template fallback</text>
+    </g>
+
+    <text x="600" y="738" font-size="14" text-anchor="middle" fill="#9C96C4">Modules never call each other. Every stage, task and result is published as an event.</text>
+  </g>
+</svg>

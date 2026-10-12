@@ -1,0 +1,52 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+dist-demo/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+coverage/
+.nyc_output/
+test-results/
+
+# secrets and local config — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+secrets/
+credentials*.json
+
+# local runtime data and logs (anchored: source folders named data/ are tracked)
+/data/
+/runtime/data/
+/dashboard/data/
+/website-builder/data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+logs/
+*.log
+*.err
+
+# editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# agent / tool local state
+.claude/
+.opencode/
+.cursor/

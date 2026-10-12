@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-label="AgencyForge — the open-source operating system for your autonomous AI agency">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B0F1A"/>
+      <stop offset="0.6" stop-color="#120F26"/>
+      <stop offset="1" stop-color="#1B1030"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="640" x2="1280" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF7A18"/>
+      <stop offset="0.5" stop-color="#E5408B"/>
+      <stop offset="1" stop-color="#7C5CFF"/>
+    </linearGradient>
+    <linearGradient id="title" x1="120" y1="0" x2="760" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#C9B8FF"/>
+    </linearGradient>
+    <radialGradient id="ember" cx="990" cy="320" r="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7C5CFF" stop-opacity="0.35"/>
+      <stop offset="0.6" stop-color="#E5408B" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#0B0F1A" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="spark" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFD166" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#FFD166" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#grid)"/>
+  <rect width="1280" height="640" fill="url(#ember)"/>
+
+  <!-- agent network (right) -->
+  <g stroke="url(#brand)" stroke-width="2" stroke-opacity="0.75" fill="none">
+    <path d="M990 320 L860 190"/><path d="M990 320 L1130 170"/><path d="M990 320 L1180 330"/>
+    <path d="M990 320 L1110 480"/><path d="M990 320 L850 470"/><path d="M990 320 L820 330"/>
+    <path d="M860 190 L1130 170" stroke-opacity="0.25"/><path d="M1130 170 L1180 330" stroke-opacity="0.25"/>
+    <path d="M1180 330 L1110 480" stroke-opacity="0.25"/><path d="M1110 480 L850 470" stroke-opacity="0.25"/>
+    <path d="M850 470 L820 330" stroke-opacity="0.25"/><path d="M820 330 L860 190" stroke-opacity="0.25"/>
+  </g>
+  <circle cx="990" cy="320" r="90" fill="url(#spark)"/>
+  <path d="M990 262 L1040 291 V349 L990 378 L940 349 V291 Z" fill="#0B0F1A" stroke="url(#brand)" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M968 352 L990 304 L1012 352" fill="none" stroke="url(#brand)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M978 336 H1002" fill="none" stroke="url(#brand)" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="990" cy="296" r="6" fill="#FFD166"/>
+
+  <g font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#E9E6FF">
+    <g transform="translate(860 190)"><circle r="30" fill="#161233" stroke="#7C5CFF" stroke-width="2"/><text y="5" text-anchor="middle">SEO</text></g>
+    <g transform="translate(1130 170)"><circle r="30" fill="#161233" stroke="#E5408B" stroke-width="2"/><text y="5" text-anchor="middle">Sales</text></g>
+    <g transform="translate(1180 330)"><circle r="30" fill="#161233" stroke="#FF7A18" stroke-width="2"/><text y="5" text-anchor="middle">Web</text></g>
+    <g transform="translate(1110 480)"><circle r="30" fill="#161233" stroke="#7C5CFF" stroke-width="2"/><text y="5" text-anchor="middle">Content</text></g>
+    <g transform="translate(850 470)"><circle r="30" fill="#161233" stroke="#E5408B" stroke-width="2"/><text y="5" text-anchor="middle">Research</text></g>
+    <g transform="translate(820 330)"><circle r="30" fill="#161233" stroke="#FF7A18" stroke-width="2"/><text y="5" text-anchor="middle">Memory</text></g>
+  </g>
+
+  <!-- title block (left) -->
+  <g font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+    <text x="96" y="150" font-size="22" font-weight="700" letter-spacing="6" fill="#FF9F5A">OPEN-SOURCE · MIT · TYPESCRIPT</text>
+    <text x="92" y="282" font-size="112" font-weight="800" letter-spacing="-3" fill="url(#title)">AgencyForge</text>
+    <rect x="96" y="312" width="180" height="8" rx="4" fill="url(#brand)"/>
+    <text x="96" y="388" font-size="34" font-weight="500" fill="#D9D4F5">The operating system for your</text>
+    <text x="96" y="436" font-size="34" font-weight="500" fill="#D9D4F5">autonomous AI agency.</text>
+    <g font-size="20" font-weight="600" fill="#E9E6FF">
+      <rect x="96" y="500" width="148" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.07" stroke="#FFFFFF" stroke-opacity="0.18"/>
+      <text x="170" y="530" text-anchor="middle">Kernel</text>
+      <rect x="258" y="500" width="148" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.07" stroke="#FFFFFF" stroke-opacity="0.18"/>
+      <text x="332" y="530" text-anchor="middle">Agents</text>
+      <rect x="420" y="500" width="148" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.07" stroke="#FFFFFF" stroke-opacity="0.18"/>
+      <text x="494" y="530" text-anchor="middle">Memory</text>
+      <rect x="582" y="500" width="168" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.07" stroke="#FFFFFF" stroke-opacity="0.18"/>
+      <text x="666" y="530" text-anchor="middle">Dashboard</text>
+    </g>
+  </g>
+</svg>

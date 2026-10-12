@@ -1,0 +1,110 @@
+# Changelog
+
+All notable changes to AgencyForge are documented here.
+Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+---
+
+## [0.2.0] — 2026-10-13
+
+### Added
+- **Missions**: visible `plan → assign → execute → respond` pipeline with stored intermediate results, HTTP API (`/api/runtime/missions`) and `mission.*` events.
+- **Built-in agent tools** backed by key-less public APIs: Wikipedia, Open-Meteo, World Bank, Hacker News.
+- **API catalog** of 1,700+ public APIs (generated from public-apis, MIT) with search API and the **API Explorer** screen.
+- **3D-style vector avatars** for every department, reacting to agent state. No raster assets.
+- **Headquarters** rebuilt on real mission data; command palette (Ctrl/Cmd+K); copy-as-Markdown briefs.
+- `pnpm doctor` environment check.
+- Community files, CI (build, typecheck, test, secret scan, CodeQL), Dependabot, issue and PR templates.
+
+### Changed
+- Project renamed to AgencyForge; monorepo Dockerfile builds from the repository root.
+- Dashboard navigation lists only working screens; placeholder screens and fabricated sample data removed.
+- Character PNG library (28 MB) replaced by generated SVG avatars.
+
+### Fixed
+- `better-sqlite3` upgraded for Node 24 prebuilt binaries; native build scripts allow-listed for pnpm 10.
+- Runtime declared its `@agencyforge/memory-engine` dependency; memory engine ships CommonJS so Node can load it, and the cognitive memory bridge passes the event bus it requires.
+- Nested interactive elements and time-dependent text that caused hydration errors.
+- `pnpm start:runtime` now starts the server entry point.
+- Removed a Windows-only native package from the dashboard's hard dependencies.
+
+---
+
+## [1.0.0-rc1] — 2026-07-24
+
+### Added
+
+**Core Runtime**
+- `RuntimeBridge` — HTTP server (port 3001) with SSE stream, REST endpoints, rate limiting, CORS, bearer auth
+- `RuntimeBootstrap` — full lifecycle orchestration: start, stop, executeGoal
+- `WorkflowEngine` — DAG-based workflow execution with parallel step support, retry policies, rollback
+- `EnhancedEventBus` — wildcard pub/sub with 10k history cap
+- `RuntimeCoordinator` — agent registry + workflow orchestration
+- `HealthServer` — internal HTTP health server (port 3002, loopback-only)
+- `ObservabilityService` — counters, gauges, histograms, trace spans, health checks
+- `OTLPExporter` — zero-dependency OTLP HTTP/JSON trace export (Jaeger, Grafana Tempo)
+- `PersistenceService` — SQLite event log, env-gated
+- `CognitiveMemoryBridge` — dynamic ESM bridge to memory-engine
+
+**AI Routing**
+- `AIService` — 7-provider chain with automatic failover (9Router → Ollama → OpenRouter → Gemini → NIM → Anthropic → OpenAI)
+- 9Router integration (localhost:20128) as primary AI gateway
+- Provider health-checking at request time
+- Streaming support with chunked fallback
+
+**Security**
+- Bearer token authentication via `RUNTIME_API_KEY` env var
+- Short-lived HMAC-SHA256 signed SSE tokens (120s TTL, JTI replay protection)
+- `POST /api/runtime/stream-token` endpoint for token exchange
+- Rate limiting — per-IP sliding window, configurable max/window
+- 6 security headers on all HTTP responses
+- 256 KB request body limit
+- HealthServer bound to loopback (127.0.0.1)
+
+**Observability**
+- Structured JSON logs on stdout
+- `X-Request-Id` and `X-Trace-Id` response headers on all HTTP responses
+- W3C `traceparent` header propagation
+- OTLP export (enabled by `OTEL_EXPORTER_OTLP_ENDPOINT` env var)
+
+**Plugin System**
+- `PluginRegistry` — register, activate, invoke, deactivate lifecycle
+- 4 plugin manifests: Firecrawl (web.scrape, web.search), Flowise, Paperclip, Research
+
+**Dashboard**
+- Next.js 14 SSE-driven live UI
+- Real-time agent status, events, heartbeats
+- AI routing dashboard (live provider health, request counts)
+- Voice assistant wired to `POST /api/runtime/chat`
+- Short-lived token exchange before each EventSource connection
+
+**Memory Engine**
+- 17 typed memory modules (episodic, semantic, procedural, working, emotional, etc.)
+- Provider abstraction: SQLite provider, Cognee provider stub
+- Checkpoint/recovery system
+- Full-text search (FTS5), vector embeddings, relationship graph
+
+**Testing**
+- 270 tests across 4 packages (runtime 116, kernel 59, dashboard 53, memory-engine 42)
+- SSE auth tests: signed token exchange, replay protection, open mode
+- Security header tests, approve endpoint tests, integration smoke tests
+
+### Fixed
+- Approve endpoint event signature bug (`eventBus.publish()` called with 2 args instead of 1 `RuntimeEvent`)
+- `HealthServer` binding to all interfaces; now loopback-only
+- `OPTIONS` preflight bypassing rate limiter; moved rate check before OPTIONS handler
+- `/health` endpoint exposing uptime/connections; now returns `{"status":"ok"}` only
+- 500 responses leaking raw `err.message`; now returns `"Internal server error"`
+- SSE route match failure when `?token=` query param present
+- Memory engine returning `unhealthy` with no providers registered
+- ProviderRouter bypassing 9Router via `forceProvider` instead of `preferredProvider`
+
+### Security
+- Raw API key in `?token=` query param now rejected (401); only HMAC-signed tokens accepted
+- All endpoints except `/health` require authentication when `RUNTIME_API_KEY` is set
+
+---
+
+## [Unreleased]
+
+See `KNOWN_LIMITATIONS.md` for planned improvements.

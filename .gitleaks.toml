@@ -1,0 +1,14 @@
+title = "AgencyForge gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known non-secret test fixtures"
+regexes = [
+  '''test-secret-key-xyz''',
+]
+paths = [
+  '''pnpm-lock\.yaml$''',
+  '''docs/assets/.*''',
+]

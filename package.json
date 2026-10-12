@@ -1,0 +1,43 @@
+{
+  "name": "agencyforge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AgencyForge — the open-source operating system for an autonomous AI agency",
+  "packageManager": "pnpm@10.28.2",
+  "scripts": {
+    "build": "pnpm -r --workspace-concurrency=1 run build",
+    "typecheck": "pnpm -r --workspace-concurrency=1 run typecheck",
+    "test": "pnpm -r --workspace-concurrency=1 run test",
+    "lint": "pnpm -r --workspace-concurrency=1 run lint",
+    "start:runtime": "pnpm --filter @agencyforge/runtime start",
+    "start:dashboard": "pnpm --filter agencyforge-dashboard start",
+    "dev:dashboard": "pnpm --filter agencyforge-dashboard dev",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ai-agents",
+    "agent-framework",
+    "multi-agent",
+    "orchestration",
+    "agency",
+    "automation",
+    "typescript",
+    "nextjs",
+    "llm",
+    "event-driven",
+    "workflow-engine",
+    "memory"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rajeshkadali97/agencyforge.git"
+  },
+  "homepage": "https://github.com/Rajeshkadali97/agencyforge#readme",
+  "bugs": {
+    "url": "https://github.com/Rajeshkadali97/agencyforge/issues"
+  }
+}

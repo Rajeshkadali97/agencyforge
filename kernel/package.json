@@ -1,0 +1,25 @@
+{
+  "name": "@agencyforge/kernel",
+  "version": "1.0.0",
+  "description": "The core runtime orchestrator for AgencyForge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "lodash": "^4.18.1"
+  }
+}

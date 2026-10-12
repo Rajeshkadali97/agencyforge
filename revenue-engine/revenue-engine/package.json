@@ -1,0 +1,18 @@
+{
+  "name": "@agencyforge/revenue-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Provider-based revenue architecture for AgencyForge downstream agents and CRM workflows.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.9.3"
+  }
+}

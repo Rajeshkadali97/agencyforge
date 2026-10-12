@@ -1,0 +1,12 @@
+{
+  "id": "agent.research",
+  "name": "Research Agent",
+  "version": "1.0.0",
+  "capabilities": [
+    { "name": "research", "version": "1.0.0", "description": "Performs business research" },
+    { "name": "analysis", "version": "1.0.0", "description": "Performs analysis" }
+  ],
+  "skills": [],
+  "toolPermissions": [],
+  "modelPreferences": []
+}

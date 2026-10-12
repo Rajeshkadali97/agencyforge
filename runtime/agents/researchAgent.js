@@ -1,0 +1,16 @@
+module.exports = {
+  id: 'agent.research',
+  name: 'Research Agent',
+  version: '1.0.0',
+  capabilities: [{ name: 'research', version: '1.0.0', description: 'Performs business research' }, { name: 'analysis', version: '1.0.0', description: 'Performs analysis' }],
+  skills: [],
+  toolPermissions: [],
+  modelPreferences: [],
+  dependencies: [],
+  costProfile: { estimatedCostPerExecution: 0.01, costBreakdown: {}, costOptimizationEnabled: true, preferredProviders: [] },
+  memoryProfile: { scopes: [] },
+  voiceProfile: { enabled: false },
+  characterProfile: { displayName: 'Research Agent', emoji: '🤖' },
+  division: 'sales',
+  workflowTags: [],
+};
