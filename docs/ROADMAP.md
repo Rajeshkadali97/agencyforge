@@ -21,7 +21,7 @@ The detailed RC1-era engineering backlog (graceful shutdown, OTLP flush, SQLite 
 - [ ] **More built-in tools** from the catalog (geocoding, currency, news, books, open data)
 - [ ] **Streaming progress** over SSE instead of polling
 - [ ] End-to-end browser tests (Playwright) for the mission flow
-- [ ] Verified multi-arch Docker images published to GHCR
+- [ ] Publish multi-arch Docker images to GHCR (the images already build in CI)
 
 ## Later
 

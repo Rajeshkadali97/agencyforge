@@ -64,7 +64,7 @@ docker compose up --build
 ```
 
 > [!NOTE]
-> The Docker setup builds the whole workspace from the repository root. It is provided and documented, but it is not yet exercised in CI, so treat it as community-supported.
+> The Docker setup builds the whole workspace from the repository root. CI builds both images (`runtime` and `dashboard`) on every push.
 
 ## How a mission works
 
