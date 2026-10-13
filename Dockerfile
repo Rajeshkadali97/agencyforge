@@ -8,7 +8,9 @@ FROM node:20-bookworm-slim AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 # Toolchain for native modules (better-sqlite3 falls back to compiling when no prebuilt binary matches).
-RUN apt-get update \n && apt-get install -y --no-install-recommends python3 make g++ ca-certificates \n && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 make g++ ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable && corepack prepare pnpm@10.28.2 --activate
 
