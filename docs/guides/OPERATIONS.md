@@ -29,7 +29,7 @@
 | `HEALTH_PORT` | `3002` | HealthServer port (loopback only) |
 | `PERSISTENCE_DB_PATH` | unset (disabled) | SQLite file path |
 | `CORS_ORIGIN` | `*` | Allowed CORS origin |
-| `RATE_LIMIT_MAX` | `100` | Max requests per window per IP |
+| `RATE_LIMIT_MAX` | `300` | Max requests per window per IP (the dashboard proxy is one IP) |
 | `RATE_LIMIT_WINDOW_MS` | `60000` | Rate limit window (ms) |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | unset (disabled) | OTLP trace export endpoint |
 | `OTEL_SERVICE_NAME` | `agencyforge-runtime` | Service name in traces |

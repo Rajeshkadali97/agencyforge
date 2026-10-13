@@ -363,7 +363,7 @@ export default function Home() {
               </div>
 
               {/* right rail */}
-              <aside className="space-y-5">
+              <aside aria-label="Mission control and activity" className="space-y-5">
                 <Surface className="space-y-4 p-5">
                   <div className="flex items-center justify-between">
                     <h2 className="text-[15px] font-extrabold text-neutral-900">Mission control</h2>

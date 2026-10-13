@@ -26,7 +26,7 @@ export interface RuntimeBridgeConfig {
   corsOrigin?: string;
   /** Max POST body bytes (default 256 KB). */
   maxBodyBytes?: number;
-  /** Max requests per IP per window (default: RATE_LIMIT_MAX env or 100). */
+  /** Max requests per IP per window (default: RATE_LIMIT_MAX env or 300). */
   rateLimitMax?: number;
   /** Sliding window duration in ms (default: RATE_LIMIT_WINDOW_MS env or 60000). */
   rateLimitWindowMs?: number;
@@ -64,6 +64,7 @@ export class RuntimeBridge extends EventEmitter {
   private usedStreamTokens = new Map<string, number>(); // jti → exp; replay protection
   private tokenCleanupInterval?: NodeJS.Timeout;
   private missionRoutes: MissionRoutes;
+  private missionService: MissionService;
 
   constructor(
     eventBus: any,
@@ -86,7 +87,7 @@ export class RuntimeBridge extends EventEmitter {
     this.heartbeatIntervalMs = config.heartbeatIntervalMs ?? 15000;
     this.maxConnections = config.maxConnections ?? 50;
     this.maxBodyBytes = config.maxBodyBytes ?? 262144; // 256 KB
-    this.rateLimitMax = config.rateLimitMax ?? parseInt(process.env['RATE_LIMIT_MAX'] ?? '100', 10);
+    this.rateLimitMax = config.rateLimitMax ?? parseInt(process.env['RATE_LIMIT_MAX'] ?? '300', 10);
     this.rateLimitWindowMs = config.rateLimitWindowMs ?? parseInt(process.env['RATE_LIMIT_WINDOW_MS'] ?? '60000', 10);
     // CORS: explicit config > env var > '*' in dev, locked-down in production
     const envCors = process.env['CORS_ORIGIN'];
@@ -104,7 +105,7 @@ export class RuntimeBridge extends EventEmitter {
         });
       }
     }
-    const missionService = new MissionService({
+    this.missionService = new MissionService({
       store: missionStore,
       publish: (type, payload, missionId) => {
         this.eventBus.publish(
@@ -126,7 +127,7 @@ export class RuntimeBridge extends EventEmitter {
         return { content: response.content, provider: response.provider, model: response.model };
       },
     });
-    this.missionRoutes = createMissionRoutes(missionService, this.maxBodyBytes);
+    this.missionRoutes = createMissionRoutes(this.missionService, this.maxBodyBytes);
     this.httpServer = http.createServer(this.requestHandler.bind(this));
   }
 
@@ -213,6 +214,8 @@ export class RuntimeBridge extends EventEmitter {
       try { res.end(); } catch {}
     }
     this.clients.clear();
+    // Flush and release the mission store
+    this.missionService.close();
     // Close HTTP server
     if (this.httpServer) {
       await new Promise<void>((resolve) => {

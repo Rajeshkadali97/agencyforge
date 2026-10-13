@@ -18,7 +18,7 @@ interface RuntimeBridgeConfig {
   maxConnections?: number;    // default 50
   corsOrigin?: string;        // default '*' (dev) or '' (prod); CORS_ORIGIN env
   maxBodyBytes?: number;      // default 262144 (256 KB)
-  rateLimitMax?: number;      // default 100; RATE_LIMIT_MAX env
+  rateLimitMax?: number;      // default 300; RATE_LIMIT_MAX env
   rateLimitWindowMs?: number; // default 60000; RATE_LIMIT_WINDOW_MS env
 }
 ```

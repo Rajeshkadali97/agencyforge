@@ -78,6 +78,7 @@ function Sidebar({
 
   return (
     <aside
+      aria-label="Primary navigation"
       className={cn(
         "flex flex-col h-[calc(100vh-32px)] my-4 ml-4 rounded-[28px] transition-all duration-300 relative z-20 glass-panel border border-white/50",
         collapsed ? "w-[76px]" : "w-[250px]",
@@ -177,9 +178,13 @@ function Sidebar({
               </div>
             </div>
             <button
+              type="button"
+              role="switch"
+              aria-checked={focusMode}
+              aria-label="Focus mode"
               onClick={() => setFocusMode(!focusMode)}
               className={cn(
-                "relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 focus:outline-none",
+                "relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2",
                 focusMode ? "bg-emerald-500" : "bg-neutral-200"
               )}
             >

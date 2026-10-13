@@ -5,7 +5,7 @@ type: software
 abstract: "Open-source, event-driven operating system for an autonomous AI agency: visible plan-assign-execute-respond missions, department agents, tiered memory and a live dashboard."
 license: MIT
 repository-code: "https://github.com/Rajeshkadali97/agencyforge"
-version: "0.3.0"
+version: "0.3.1"
 date-released: "2026-10-13"
 keywords:
   - ai-agents

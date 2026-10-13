@@ -203,11 +203,11 @@ export default function MissionsPage() {
   const [error, setError] = React.useState<string | null>(null);
   const [autoRun, setAutoRun] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
-  const pollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+  const pollRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stopPolling = React.useCallback(() => {
     if (pollRef.current) {
-      clearInterval(pollRef.current);
+      clearTimeout(pollRef.current);
       pollRef.current = null;
     }
   }, []);
@@ -225,19 +225,26 @@ export default function MissionsPage() {
   const poll = React.useCallback(
     (id: string) => {
       stopPolling();
-      pollRef.current = setInterval(async () => {
+      let attempt = 0;
+      const tick = async () => {
         try {
           const m = await runtimeJson<Mission>(`${RUNTIME_ENDPOINTS.missions}/${id}`);
           setMission(m);
           if (isFinished(m)) {
-            stopPolling();
+            pollRef.current = null;
             void refreshHistory();
+            return;
           }
         } catch (e) {
-          stopPolling();
+          pollRef.current = null;
           setError(e instanceof Error ? e.message : "Lost connection to the runtime");
+          return;
         }
-      }, 600);
+        // Fast at first so short missions feel live, then back off to spare the runtime.
+        attempt += 1;
+        pollRef.current = setTimeout(tick, attempt < 20 ? 600 : 1500);
+      };
+      pollRef.current = setTimeout(tick, 400);
     },
     [refreshHistory, stopPolling],
   );

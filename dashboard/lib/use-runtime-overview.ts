@@ -89,7 +89,7 @@ export function deriveOverview(missions: Mission[], online: boolean | null): Run
 }
 
 /** Polls the runtime for missions and derives dashboard statistics from real data. */
-export function useRuntimeOverview(pollMs = 4000): RuntimeOverview {
+export function useRuntimeOverview(pollMs = 5000): RuntimeOverview {
   const [state, setState] = React.useState<{ online: boolean | null; missions: Mission[] }>({
     online: null,
     missions: [],

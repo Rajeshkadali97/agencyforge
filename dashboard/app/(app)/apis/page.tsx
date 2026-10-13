@@ -34,7 +34,7 @@ function ApiCard({ api }: { api: CatalogApi }) {
       className="group flex h-full flex-col rounded-2xl border border-white/80 bg-white/60 p-4 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-[15px] font-extrabold leading-snug text-neutral-900 group-hover:text-emerald-700">{api.name}</h3>
+        <h2 className="text-[15px] font-extrabold leading-snug text-neutral-900 group-hover:text-emerald-700">{api.name}</h2>
         <ExternalLink className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-neutral-300 group-hover:text-emerald-600" />
       </div>
       {api.featured && (

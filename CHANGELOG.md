@@ -5,6 +5,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.3.1] — 2026-10-13
+
+### Fixed
+- **Accessibility.** An axe-core scan (WCAG 2 A/AA and best practices) of all seven screens now reports 0 violations. Fixed: the unnamed Focus-mode switch (critical, on every page), duplicate landmarks, and heading order on the API Explorer.
+- **Rate limit headroom.** The dashboard proxy puts every browser user behind one IP, so the default `RATE_LIMIT_MAX` is now 300 per minute (was 100). Mission polling backs off after the first twenty polls and the overview poll runs every 5 s.
+- **Clean shutdown.** The runtime releases the mission database handle when the bridge stops.
+
+### Changed
+- GitHub Actions bumped to current majors (checkout 7, setup-node 7, pnpm/action-setup 6, gitleaks-action 3, codeql-action 4), verified by CI.
+
+---
+
 ## [0.3.0] — 2026-10-13
 
 ### Added
