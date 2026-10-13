@@ -46,6 +46,7 @@ export interface Mission {
   id: string;
   goal: string;
   status: MissionStatus;
+  plannedBy?: "rules" | "llm";
   createdAt: string;
   stages: MissionStage[];
   tasks: MissionTask[];

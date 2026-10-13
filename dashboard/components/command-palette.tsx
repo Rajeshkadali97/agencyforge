@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, Home, Rocket, Library, Activity, Globe, Compass, Radar, CloudSun } from "lucide-react";
+import { Search, Home, Rocket, Library, Activity, Globe, Compass, Radar, CloudSun, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PaletteItem {
@@ -19,6 +19,7 @@ const ITEMS: PaletteItem[] = [
   { id: "home", label: "Headquarters", hint: "Team overview and live activity", href: "/", icon: Home, group: "Go to" },
   { id: "missions", label: "Missions", hint: "Give the team a goal", href: "/missions", icon: Rocket, group: "Go to" },
   { id: "apis", label: "API Explorer", hint: "Browse free public APIs", href: "/apis", icon: Library, group: "Go to" },
+  { id: "team", label: "Team", hint: "Meet the agents and their moods", href: "/team", icon: Users, group: "Go to" },
   { id: "routing", label: "AI Routing", hint: "Provider chain and health", href: "/ai-routing", icon: Activity, group: "Go to" },
   { id: "websites", label: "Websites", hint: "AI-generated site projects", href: "/websites", icon: Globe, group: "Go to" },
   { id: "m-market", label: "Market brief", hint: "Research a market, country and tech trends", href: "/missions?template=market-brief", icon: Compass, group: "Launch a mission" },

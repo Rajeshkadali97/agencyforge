@@ -388,6 +388,11 @@ export default function MissionsPage() {
                 <p className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Mission {mission.id}</p>
                 <h2 className="truncate text-[17px] font-extrabold text-neutral-900">{mission.goal}</h2>
               </div>
+              {mission.plannedBy && (
+                <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-bold text-neutral-600">
+                  {mission.plannedBy === "llm" ? "Planned by an LLM" : "Planned by built-in rules"}
+                </span>
+              )}
               <span
                 className={cn(
                   "rounded-full px-3 py-1 text-xs font-extrabold uppercase",

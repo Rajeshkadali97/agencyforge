@@ -6,6 +6,7 @@ import {
   LayoutGrid,
   Rocket,
   Library,
+  Users,
   Activity,
   Globe,
   ChevronRight,
@@ -58,6 +59,7 @@ function Sidebar({
     },
     { id: "missions", label: "Missions", icon: Rocket, action: () => router.push("/missions") },
     { id: "apis", label: "API Explorer", icon: Library, action: () => router.push("/apis") },
+    { id: "team", label: "Team", icon: Users, action: () => router.push("/team") },
     { id: "routing", label: "AI Routing", icon: Activity, action: () => router.push("/ai-routing") },
     { id: "websites", label: "Websites", icon: Globe, action: () => router.push("/websites") },
   ];
@@ -68,6 +70,7 @@ function Sidebar({
     if (id === "departments") return onHq && !isHomeActive;
     if (id === "missions") return pathname.startsWith("/missions");
     if (id === "apis") return pathname.startsWith("/apis");
+    if (id === "team") return pathname.startsWith("/team");
     if (id === "routing") return pathname.startsWith("/ai-routing");
     if (id === "websites") return pathname.startsWith("/websites");
     return false;

@@ -5,6 +5,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.3.0] — 2026-10-13
+
+### Added
+- **Mission persistence.** With `AGENCYFORGE_DB_PATH` set, missions are stored in SQLite and reloaded on start. A mission that was running at shutdown is marked failed ("Interrupted by a runtime restart.").
+- **LLM planner.** When a provider is configured the model proposes the task list. Every tool name and argument is validated against the registry, and anything invalid falls back to the rules. Missions record `plannedBy`.
+- **Same-origin event stream.** The dashboard proxies the SSE stream and attaches the server-held key, so browsers never call the runtime directly and no CORS setup is needed.
+- **Team screen** with every agent, its live tool and a mood preview.
+- `docs/GETTING_STARTED.md` with prerequisites, troubleshooting and next steps.
+- Seven ready-made thumbnails in `docs/assets/thumbnails`.
+
+### Fixed
+- `RUNTIME_PORT` was documented but ignored. The runtime now honours `RUNTIME_PORT` and `HEALTH_PORT`.
+
+---
+
 ## [0.2.1] — 2026-10-13
 
 ### Fixed

@@ -75,6 +75,8 @@ export interface Mission {
   goal: string;
   template?: string;
   status: MissionStatus;
+  /** Who produced the task list: the deterministic rules or a validated LLM answer. */
+  plannedBy?: 'rules' | 'llm';
   createdAt: string;
   updatedAt: string;
   stages: MissionStage[];

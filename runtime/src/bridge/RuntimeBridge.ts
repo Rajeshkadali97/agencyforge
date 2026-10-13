@@ -6,7 +6,16 @@ import { getAIService } from '../ai/ai-service';
 import type { AIMessage } from '../ai/providers/base';
 import { generateStreamToken, validateStreamToken, cleanupExpiredJtis } from './StreamTokenManager';
 import { MissionService } from '../missions/MissionService';
+import { SqliteMissionStore, type MissionStore } from '../missions/MissionStore';
 import { createMissionRoutes, MissionRoutes } from '../missions/routes';
+
+/** Read a TCP port from the environment. Returns undefined when unset or invalid. */
+function envPort(name: string): number | undefined {
+  const raw = process.env[name];
+  if (!raw) return undefined;
+  const n = Number(raw);
+  return Number.isInteger(n) && n >= 0 && n <= 65535 ? n : undefined;
+}
 
 export interface RuntimeBridgeConfig {
   port?: number;
@@ -72,7 +81,7 @@ export class RuntimeBridge extends EventEmitter {
     this.observability = observability;
     this.kernelBinding = kernelBinding;
     this.logger = logger;
-    this.port = config.port ?? 3001;
+    this.port = config.port ?? envPort('RUNTIME_PORT') ?? 3001;
     this.bridgePath = config.path ?? '/api/runtime/stream';
     this.heartbeatIntervalMs = config.heartbeatIntervalMs ?? 15000;
     this.maxConnections = config.maxConnections ?? 50;
@@ -83,7 +92,20 @@ export class RuntimeBridge extends EventEmitter {
     const envCors = process.env['CORS_ORIGIN'];
     const isProd = process.env['NODE_ENV'] === 'production';
     this.corsOrigin = config.corsOrigin ?? envCors ?? (isProd ? '' : '*');
+    // Persist missions next to the other runtime data when a database path is configured.
+    let missionStore: MissionStore | undefined;
+    const dbPath = process.env['AGENCYFORGE_DB_PATH'];
+    if (dbPath) {
+      try {
+        missionStore = new SqliteMissionStore(dbPath);
+      } catch (err) {
+        this.logger.warn('RuntimeBridge: mission persistence unavailable, using memory only', {
+          error: err instanceof Error ? err.message : String(err),
+        });
+      }
+    }
     const missionService = new MissionService({
+      store: missionStore,
       publish: (type, payload, missionId) => {
         this.eventBus.publish(
           createRuntimeEvent(

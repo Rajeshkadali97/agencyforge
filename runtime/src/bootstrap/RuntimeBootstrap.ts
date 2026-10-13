@@ -110,7 +110,12 @@ export class RuntimeBootstrap extends EventEmitter {
     }
     // Start health server to expose /health endpoint
     // Use OS-assigned port in test env to avoid EADDRINUSE across test cycles
-    const healthPort = process.env['VITEST'] ? 0 : undefined;
+    const configuredHealthPort = Number(process.env['HEALTH_PORT']);
+    const healthPort = process.env['VITEST']
+      ? 0
+      : Number.isInteger(configuredHealthPort) && configuredHealthPort > 0
+        ? configuredHealthPort
+        : undefined;
     this.healthServer = new HealthServer(this.healthManager, this.logger, healthPort);
     this.healthServer.start();
     // Wire cognitive memory subscriptions after engines are initialized

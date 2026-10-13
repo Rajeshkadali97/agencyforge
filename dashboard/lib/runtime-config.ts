@@ -14,9 +14,8 @@ export const RUNTIME_BASE_URL =
 
 
 export const RUNTIME_ENDPOINTS = {
-  stream:      `${RUNTIME_BASE_URL}/api/runtime/stream`,
-  /** Same-origin: the Next.js server mints the short-lived stream token with the server-held key. */
-  streamToken: `/api/runtime/stream-token`,
+  /** Same-origin SSE proxy: the dashboard server attaches the runtime key. */
+  stream:      `/api/runtime/stream`,
   snapshot:    `${RUNTIME_BASE_URL}/api/runtime/snapshot`,
   memory:      `${RUNTIME_BASE_URL}/api/runtime/memory`,
   search:      `${RUNTIME_BASE_URL}/api/runtime/search`,

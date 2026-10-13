@@ -13,7 +13,7 @@
 
 **Give an AI team a goal and watch it plan, hand off work, call live data sources and write the brief. No API keys required.**
 
-[Quick start](#quick-start) · [How missions work](#how-a-mission-works) · [API Explorer](docs/API_CATALOG.md) · [Architecture](#architecture) · [Docs](docs/HANDBOOK.md) · [Roadmap](docs/ROADMAP.md)
+[Getting started](docs/GETTING_STARTED.md) · [Quick start](#quick-start) · [How missions work](#how-a-mission-works) · [API Explorer](docs/API_CATALOG.md) · [Architecture](#architecture) · [Docs](docs/HANDBOOK.md) · [Roadmap](docs/ROADMAP.md)
 
 </div>
 
@@ -97,10 +97,26 @@ Read [docs/MISSIONS.md](docs/MISSIONS.md) for the full API, the event names and 
 - **Headquarters** shows your departments, real mission statistics and live activity. Nothing on it is mock data.
 - **Missions** runs the pipeline and shows each agent's work as it happens.
 - **API Explorer** searches 1,700+ public APIs. Filter to *free, no key, HTTPS*. Built-in agent tools are flagged.
+- **Team** shows every agent, its live tool, and how its avatar looks in each mood.
 - **AI Routing** shows the provider chain, health and failovers.
 - **Websites** generates site projects from a brief.
 
-Agents are drawn as studio-lit, 3D-style vector avatars that react to their state (working, thinking, done, needs attention). They are plain SVG: no image files, no licensing questions.
+Agents are drawn as studio-lit, 3D-style vector avatars that react to their state (working, thinking, done, needs attention). They are plain SVG: no image files, no licensing questions. The layout is responsive: on a phone the sidebar becomes a drawer.
+
+### Gallery
+
+<table>
+  <tr>
+    <td><img src="docs/assets/thumbnails/thumb-02-four-stages.png" alt="The four mission stages"/></td>
+    <td><img src="docs/assets/thumbnails/thumb-03-api-library.png" alt="1,700 free APIs built in"/></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/thumbnails/thumb-05-meet-the-team.png" alt="Meet the AI team"/></td>
+    <td><img src="docs/assets/thumbnails/thumb-07-reacts-to-work.png" alt="Agents react to the work"/></td>
+  </tr>
+</table>
+
+More ready-made images live in [`docs/assets/thumbnails`](docs/assets/thumbnails).
 
 ## Architecture
 
@@ -126,20 +142,21 @@ Nothing is required to boot. Copy [`.env.example`](.env.example) to `.env` to ch
 | `OPENROUTER_API_KEY`, `GEMINI_API_KEY`, `NIM_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` | Direct provider fallbacks |
 | `RUNTIME_API_KEY` | Require `Authorization: Bearer …` on runtime endpoints. **Set in production**, also in the dashboard server env: it proxies calls and keeps the key off the browser |
 | `CORS_ORIGIN` | Allowed dashboard origin. **Set explicitly in production.** |
-| `AGENCYFORGE_DB_PATH` | SQLite file for events, state and memory |
+| `AGENCYFORGE_DB_PATH` | SQLite file for events, state, memory and missions |
+| `RUNTIME_PORT`, `HEALTH_PORT` | Runtime bridge (default 3001) and health server (default 3002) ports |
 | `NEXT_PUBLIC_OPERATOR_NAME` | Name shown in the dashboard greeting |
 
 Secrets are read from the environment only. `.env` files are git-ignored and CI runs a secret scan on every push.
 
 ## Project status
 
-AgencyForge is **v0.2 alpha**. Specifically:
+AgencyForge is **v0.3 alpha**. Specifically:
 
 | Area | State |
 |---|---|
 | Kernel, event bus, workflow engine, runtime bridge, AI failover, memory engine, persistence | Solid. Covered by automated tests |
-| Missions pipeline and four built-in tools | Working. Rule-based planner (no LLM planner yet); missions held in memory |
-| Dashboard: HQ, Missions, API Explorer, AI Routing, Websites | Working. Reads real data from the runtime |
+| Missions pipeline and four built-in tools | Working. Rules plan by default; an LLM planner is used when a provider is configured (validated, with fallback). Missions persist to SQLite when `AGENCYFORGE_DB_PATH` is set |
+| Dashboard: HQ, Missions, API Explorer, Team, AI Routing, Websites | Working. Reads real data from the runtime through same-origin server routes. Responsive |
 | Research, revenue and website engines | Early. Adapters that call paid or restricted APIs need your keys and your compliance review |
 | Voice, multi-node scaling, Postgres | Not implemented. See [Known limitations](docs/guides/KNOWN_LIMITATIONS.md) |
 

@@ -10,18 +10,22 @@ import type {
   MissionTask,
   StageName,
 } from './types';
-import { planMission } from './planner';
+import { planMission, type MissionPlan } from './planner';
+import { llmPlan } from './llmPlanner';
 import { suggestApis } from './catalog';
 import { MISSION_TOOLS } from './tools';
+import type { MissionStore } from './MissionStore';
 
 export type MissionEventPublisher = (type: string, payload: Record<string, unknown>, missionId: string) => void;
 
 export interface MissionServiceOptions {
   /** HTTP client used by tools. Defaults to the global `fetch`. */
   fetch?: FetchLike;
-  /** Optional LLM used for the respond stage. Without it a template writes the brief. */
+  /** Optional LLM used to plan and to write the brief. Without it rules plan and a template writes. */
   ai?: AiCompleter;
   publish?: MissionEventPublisher;
+  /** Optional persistence. Missions are reloaded on start; unfinished ones are marked interrupted. */
+  store?: MissionStore;
   maxMissions?: number;
   toolTimeoutMs?: number;
   aiTimeoutMs?: number;
@@ -68,6 +72,7 @@ export class MissionService {
   private readonly fetchImpl: FetchLike;
   private readonly ai?: AiCompleter;
   private readonly publish?: MissionEventPublisher;
+  private readonly store?: MissionStore;
   private readonly maxMissions: number;
   private readonly toolTimeoutMs: number;
   private readonly aiTimeoutMs: number;
@@ -79,9 +84,45 @@ export class MissionService {
     this.fetchImpl = impl;
     this.ai = options.ai;
     this.publish = options.publish;
+    this.store = options.store;
     this.maxMissions = options.maxMissions ?? 50;
     this.toolTimeoutMs = options.toolTimeoutMs ?? 8000;
     this.aiTimeoutMs = options.aiTimeoutMs ?? 6000;
+    this.restore();
+  }
+
+  /** Load persisted missions. Anything that was still running died with the previous process. */
+  private restore(): void {
+    if (!this.store) return;
+    try {
+      for (const m of this.store.load(this.maxMissions)) {
+        if (m.status !== 'completed' && m.status !== 'failed') {
+          m.status = 'failed';
+          m.error = 'Interrupted by a runtime restart.';
+          m.updatedAt = iso();
+          for (const s of m.stages) if (s.status === 'running') s.status = 'failed';
+          for (const t of m.tasks) {
+            if (t.status === 'running' || t.status === 'pending') {
+              t.status = 'failed';
+              t.error = 'Interrupted by a runtime restart.';
+            }
+          }
+          this.persist(m);
+        }
+        this.missions.set(m.id, m);
+      }
+    } catch {
+      // A broken store must never stop the runtime from starting.
+    }
+  }
+
+  private persist(mission: Mission): void {
+    if (!this.store) return;
+    try {
+      this.store.save(mission);
+    } catch {
+      // Persistence is best effort.
+    }
   }
 
   create(goal: string, options: CreateMissionOptions = {}): Mission {
@@ -108,11 +149,21 @@ export class MissionService {
 
     this.missions.set(mission.id, mission);
     this.evict();
+    this.persist(mission);
     this.emit(MISSION_EVENT.created, mission, { goal: mission.goal });
 
     const run = this.run(mission, options.useAi !== false).finally(() => this.runs.delete(mission.id));
     this.runs.set(mission.id, run);
     return mission;
+  }
+
+  /** Release the persistence handle. Call on shutdown. */
+  close(): void {
+    try {
+      this.store?.close?.();
+    } catch {
+      // nothing to do
+    }
   }
 
   get(id: string): Mission | undefined {
@@ -137,15 +188,24 @@ export class MissionService {
     try {
       // Stage 1 — plan
       this.setStage(mission, 'plan', 'running');
-      const plan = planMission(mission.goal);
-      mission.tasks = plan.tasks;
-      mission.suggestedApis = suggestApis(`${plan.topic} ${plan.place ?? ''}`, 5);
-      this.setStage(mission, 'plan', 'done', plan.rationale.join(' '));
+      let plan: MissionPlan | null = null;
+      if (useAi && this.ai) {
+        try {
+          plan = await withTimeout(llmPlan(mission.goal, this.ai), this.aiTimeoutMs, 'LLM planner');
+        } catch {
+          plan = null; // fall back to the rule-based planner
+        }
+      }
+      mission.plannedBy = plan ? 'llm' : 'rules';
+      const finalPlan = plan ?? planMission(mission.goal);
+      mission.tasks = finalPlan.tasks;
+      mission.suggestedApis = suggestApis(`${finalPlan.topic} ${finalPlan.place ?? ''}`, 5);
+      this.setStage(mission, 'plan', 'done', finalPlan.rationale.join(' '));
 
       // Stage 2 — assign
       mission.status = 'assigning';
       this.setStage(mission, 'assign', 'running');
-      const assignment = plan.tasks.map((t) => `${t.agent} agent → ${MISSION_TOOLS[t.tool].label}`).join('; ');
+      const assignment = finalPlan.tasks.map((t) => `${t.agent} agent → ${MISSION_TOOLS[t.tool].label}`).join('; ');
       this.setStage(mission, 'assign', 'done', assignment);
 
       // Stage 3 — execute (independent tasks run in parallel)
@@ -167,7 +227,7 @@ export class MissionService {
       // Stage 4 — respond
       mission.status = 'responding';
       this.setStage(mission, 'respond', 'running');
-      mission.result = await this.buildResult(mission, plan.topic, useAi);
+      mission.result = await this.buildResult(mission, finalPlan.topic, useAi);
       this.setStage(
         mission,
         'respond',
@@ -288,6 +348,8 @@ export class MissionService {
   }
 
   private emit(type: string, mission: Mission, extra: Record<string, unknown>): void {
+    // Every state change goes through here, so persisting here keeps the store current.
+    this.persist(mission);
     if (!this.publish) return;
     try {
       this.publish(type, { missionId: mission.id, status: mission.status, ...extra }, mission.id);

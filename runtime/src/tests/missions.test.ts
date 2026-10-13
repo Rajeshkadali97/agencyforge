@@ -162,7 +162,9 @@ describe('MissionService', () => {
     const service = new MissionService({ fetch: makeFetch(), ai });
     const mission = service.create('Research the dental clinic market in Germany');
     const done = await service.waitFor(mission.id);
-    expect(ai).toHaveBeenCalledOnce();
+    // once to plan (not valid JSON here, so the rules plan) and once to write the brief
+    expect(ai).toHaveBeenCalledTimes(2);
+    expect(done.plannedBy).toBe('rules');
     expect(done.result?.writtenBy).toBe('llm');
     expect(done.result?.provider).toBe('test');
   });

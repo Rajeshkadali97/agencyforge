@@ -11,7 +11,6 @@ const ALLOWED: Array<{ pattern: RegExp; methods: string[] }> = [
   { pattern: /^missions\/[A-Za-z0-9_-]{1,64}$/, methods: ["GET"] },
   { pattern: /^apis$/, methods: ["GET"] },
   { pattern: /^apis\/categories$/, methods: ["GET"] },
-  { pattern: /^stream-token$/, methods: ["POST"] },
   { pattern: /^snapshot$/, methods: ["GET"] },
 ];
 

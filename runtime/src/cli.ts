@@ -21,9 +21,10 @@ async function main(): Promise<void> {
       logger.info('Runtime started successfully');
       logger.info(`Health checks: ${result.subsystems.length} subsystems registered`);
       logger.info(`Startup duration: ${result.durationMs}ms`);
-      logger.info('RuntimeBridge: HTTP server listening on port 3001');
-      logger.info('Dashboard SSE: http://localhost:3001/api/runtime/stream');
-      logger.info('Snapshot API: http://localhost:3001/api/runtime/snapshot');
+      const port = process.env['RUNTIME_PORT'] ?? '3001';
+      logger.info(`RuntimeBridge: HTTP server listening on port ${port}`);
+      logger.info(`Dashboard SSE: http://localhost:${port}/api/runtime/stream`);
+      logger.info(`Snapshot API: http://localhost:${port}/api/runtime/snapshot`);
       logger.info('Press Ctrl+C to shut down');
     } else {
       logger.error('Runtime startup failed', { errors: result.errors });

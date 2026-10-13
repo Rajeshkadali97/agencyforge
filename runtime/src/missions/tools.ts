@@ -5,7 +5,7 @@ import type { FetchLike, ToolId, ToolOutput } from './types';
  * Every tool takes an injectable `fetch` so tests never touch the network.
  */
 
-const USER_AGENT = 'AgencyForge/0.2 (open-source AI agency OS; https://github.com/Rajeshkadali97/agencyforge)';
+const USER_AGENT = 'AgencyForge/0.3 (open-source AI agency OS; https://github.com/Rajeshkadali97/agencyforge)';
 const DEFAULT_TIMEOUT_MS = 8000;
 
 export interface MissionToolContext {
