@@ -25,7 +25,7 @@ You can expect an acknowledgement within 72 hours and a status update within 7 d
 
 ## Hardening checklist for deployments
 
-- Set `RUNTIME_API_KEY` so every non-public runtime endpoint requires a bearer token.
+- Set `RUNTIME_API_KEY` so every non-public runtime endpoint requires a bearer token. Give the same value to the dashboard server (env `RUNTIME_API_KEY`, never `NEXT_PUBLIC_`): the dashboard proxies runtime calls and attaches the key server-side, so the browser never holds it.
 - Set `CORS_ORIGIN` to your dashboard origin instead of `*`.
 - Keep the health server (`:3002`) on loopback or behind your network boundary.
 - Back up and protect the SQLite file at `AGENCYFORGE_DB_PATH`; it can contain business data.

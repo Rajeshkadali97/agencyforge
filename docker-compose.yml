@@ -44,6 +44,7 @@ services:
       NEXT_TELEMETRY_DISABLED: "1"
       NEXT_PUBLIC_RUNTIME_URL: http://localhost:3001
       RUNTIME_BRIDGE_URL: http://runtime:3001
+      RUNTIME_API_KEY: ${RUNTIME_API_KEY:-}
     depends_on:
       runtime:
         condition: service_healthy

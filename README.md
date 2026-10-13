@@ -124,7 +124,7 @@ Nothing is required to boot. Copy [`.env.example`](.env.example) to `.env` to ch
 |---|---|
 | `NINE_ROUTER_URL` | Local AI gateway (default `http://localhost:20128/v1`) |
 | `OPENROUTER_API_KEY`, `GEMINI_API_KEY`, `NIM_API_KEY`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` | Direct provider fallbacks |
-| `RUNTIME_API_KEY` | Require `Authorization: Bearer …` on runtime endpoints. **Set in production.** |
+| `RUNTIME_API_KEY` | Require `Authorization: Bearer …` on runtime endpoints. **Set in production**, also in the dashboard server env: it proxies calls and keeps the key off the browser |
 | `CORS_ORIGIN` | Allowed dashboard origin. **Set explicitly in production.** |
 | `AGENCYFORGE_DB_PATH` | SQLite file for events, state and memory |
 | `NEXT_PUBLIC_OPERATOR_NAME` | Name shown in the dashboard greeting |

@@ -1,10 +1,7 @@
-import { RUNTIME_API_TOKEN } from "./runtime-config";
-
-/** Thin JSON client for the runtime bridge. Adds the bearer token when one is configured. */
+/** Thin JSON client for same-origin runtime proxy routes. The server adds credentials. */
 export async function runtimeJson<T>(url: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
   const headers: Record<string, string> = { Accept: "application/json" };
   if (init.body !== undefined) headers["Content-Type"] = "application/json";
-  if (RUNTIME_API_TOKEN) headers["Authorization"] = `Bearer ${RUNTIME_API_TOKEN}`;
 
   const res = await fetch(url, {
     method: init.method ?? "GET",

@@ -5,6 +5,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.2.1] — 2026-10-13
+
+### Fixed
+- **Mobile layout.** The sidebar took 250 px of a 390 px phone and left 124 px for content. Below the `lg` breakpoint it is now a slide-in drawer opened from a top bar.
+- **Runtime key in the browser.** Mission, API-catalog, routing and stream-token calls now go through server-side proxy routes in the dashboard. `RUNTIME_API_KEY` stays on the server; the `NEXT_PUBLIC_RUNTIME_API_TOKEN` variable is gone.
+- **Planner places.** Lowercase places ("weather in paris"), places without a preposition ("Compare Tokyo and Osaka", "visit Kyoto") and lists of places ("Tokyo and Osaka") are now recognised. Technology and company names are not mistaken for places.
+- **Docker.** The image installs the native build toolchain, so `better-sqlite3` builds when no prebuilt binary matches. CI now builds both images.
+
+### Added
+- Dashboard tests for the runtime proxy (allowlist, key injection, error handling) and mission statistics.
+
+---
+
 ## [0.2.0] — 2026-10-13
 
 ### Added
