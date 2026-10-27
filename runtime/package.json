@@ -26,7 +26,7 @@
     "@agencyforge/memory-engine": "workspace:*",
     "@agencyforge/research": "workspace:*",
     "better-sqlite3": "^12.6.2",
-    "firecrawl": "^4.29.2",
+    "firecrawl": "^4.51.0",
     "node-cron": "^4.6.0"
   },
   "devDependencies": {
